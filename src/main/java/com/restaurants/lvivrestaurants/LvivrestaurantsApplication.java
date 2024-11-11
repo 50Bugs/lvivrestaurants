@@ -10,6 +10,7 @@ public class LvivrestaurantsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LvivrestaurantsApplication.class, args);
 		//System.out.println(ParsingData.parseFromDlabComUA());
+		//sss
 	}
 
 }
