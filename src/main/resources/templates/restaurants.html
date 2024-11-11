@@ -1,0 +1,131 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Serhii Kit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Ресторани Львова</title>
+    <style>
+    </style>
+</head>
+<body>
+    <header class = header_section>
+        <div class="header_top">
+            <div class="container-fluid">
+                <div class="contact_link-container">
+                    <a>Ресторани Львова</a>
+                    <a class="phone" href="#" class="contact_link2">
+                        <span>+8800-55-53-535</span>
+                    </a>
+                    <a class="a_email" href="mailto:lviv.restaurants@gmail.com">lviv.restaurants@gmail.com</a>
+                </div>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="" alt="Background image">
+            <div class="text-overlay">Ласкаво просимо до Львова!</div>
+            <div class="text-overlay1">Відкрийте для себе найкращі ресторани міста Лева.</div>
+        </div>
+    </header>
+
+
+
+
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресторани Львова</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="css/index.css">-->
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Ресторани Львова</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#home">Головна</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#restaurants">Ресторани</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact">Контакти</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Ласкаво просимо до Львова</h1>
+        <p class="lead text-muted">Відкрийте для себе найкращі ресторани нашого міста</p>
+        <a href="#restaurants" class="btn btn-primary">Переглянути ресторани</a>
+    </div>
+</section>
+
+<!-- Restaurants Section -->
+<section id="restaurants" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Наші Ресторани</h2>
+            <p>Ознайомтеся з найкращими закладами міста</p>
+        </div>
+        <div class="row">
+            <div th:each="restaurant : ${restaurants}" class="col-md-4 mb-4">
+                <div class="card">
+                    <img th:src="@{${restaurant.imageURL}}" class="card-img-top" alt="Фото ресторану">
+                    <div class="card-body">
+                        <h5 th:text="${restaurant.name}" class="card-title">Назва Ресторану</h5>
+                        <p th:text="${restaurant.info}" class="card-text">Опис ресторану</p>
+                        <p class="card-text"><strong th:text="${restaurant.address}">Адреса</strong></p>
+                        <p class="card-text"><strong>Рейтинг: <!--<span th:text="${restaurant.rating}">5.0</span>--></strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2>Контакти</h2>
+            <p>Зв'яжіться з нами для будь-яких запитань</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h5>Адреса</h5>
+                <p>Вулиця Прикладна, 123<br>Львів, Україна</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Контактна інформація</h5>
+                <p>Email: info@lvivrestaurants.com<br>Телефон: (032) 123-4567</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="mailto:info@lvivrestaurants.com" class="btn btn-primary">Напишіть нам</a>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
