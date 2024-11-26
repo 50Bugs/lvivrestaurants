@@ -2,6 +2,8 @@ package com.restaurants.lvivrestaurants.domain;
 
 import jakarta.persistence.*;
 import java.util.Set;
+
+
 @Entity
 public class Restaurant {
 

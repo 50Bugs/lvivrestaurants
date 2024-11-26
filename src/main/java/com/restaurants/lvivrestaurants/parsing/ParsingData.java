@@ -32,7 +32,22 @@ public class ParsingData {
                             "text-14 pl-4 position-relative cmp-list telephone-handset").text();
                     String email = e.getElementsByClass("text-14 pl-4 position-relative little-envelope").text();
                     String temp_url = e.getElementsByClass("text-14 pl-4 position-relative cursor").text();
-                    String info = e.getElementsByClass("text-14 pt-md-0").text().substring(12);
+                    //String info = e.getElementsByClass("text-14 pt-md-0").text().substring(12);
+
+                    String info = "";
+                    try {
+                        Elements infoElements = e.getElementsByClass("text-14 pt-md-0");
+
+
+                        for (Element infoElement : infoElements) {
+                            if (infoElement.text().startsWith("Діяльність:")) {
+                                info = infoElement.text().substring(11).trim();
+                                break;
+                            }
+                        }
+                    } catch (Exception ex) {
+                        info = "";
+                    }
 
                     Element imageElement = document.select("img.rounded").first();
 
@@ -55,4 +70,6 @@ public class ParsingData {
 
         return RestaurantList;
     }
+
+
 }

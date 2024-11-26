@@ -21,6 +21,6 @@ public class RestaurantController {
     public String getAllRestaurants(Model model) {
         List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
         model.addAttribute("restaurants", restaurants);
-        return "restaurants"; // ім'я шаблону, який буде відображений (наприклад, "restaurants.html")
+        return "restaurants"; // "restaurants.html"
     }
 }
