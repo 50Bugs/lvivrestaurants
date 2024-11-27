@@ -1,5 +1,6 @@
 package com.restaurants.lvivrestaurants.bootstrap;
 
+import com.restaurants.lvivrestaurants.formating.FormatingData;
 import com.restaurants.lvivrestaurants.domain.Restaurant;
 import com.restaurants.lvivrestaurants.parsing.ParsingData;
 import com.restaurants.lvivrestaurants.repossitories.RestaurantRepository;
@@ -19,7 +20,9 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        ArrayList<Restaurant> restaurants = ParsingData.parseFromDlabComUA();
+        //ArrayList<Restaurant> restaurants = ParsingData.parseFromDlabComUA();
+        ArrayList<Restaurant> restaurants = FormatingData.mergeRestaurantLists(
+                ParsingData.parseFromDlabComUA(), ParsingData.parseFromGoogleMaps());
 
         for (Restaurant r : restaurants){
             restaurantRepository.save(r);

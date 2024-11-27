@@ -15,37 +15,78 @@ public class Restaurant {
     private String address;
     private String phone;
     private String email;
-    private String url;
+    private String rating;
+    private String averagePrice;
+    private String websiteURL;
+    @Column(length = 500)
     private String imageURL;
-
+    @Column(length = 800)
+    private String googleMapsURL;
+    //@Column(length = 500)
+    private String menuURL;
     @Column(length = 500)
     private String info;
     //private Set <Restaurant> restaurants;
 
-    public Restaurant(String name, String address, String phone, String email, String url, String info, String imageURL) {
+    public Restaurant(String name, String address, String phone, String email,
+                      String websiteURL, String info, String imageURL) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.url = url;
+        this.websiteURL = websiteURL;
         this.info = info;
         this.imageURL = imageURL;
+        rating = "";
+        googleMapsURL = "";
+        averagePrice = "";
+        menuURL = "";
+    }
+
+    public Restaurant(String name, String address, String phone, String websiteURL, String imageURL,
+                      String googleMapsURL, String menuURL, String rating, String averagePrice, String info) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.websiteURL = websiteURL;
+        this.imageURL = imageURL;
+        this.googleMapsURL = googleMapsURL;
+        this.menuURL = menuURL;
+        this.rating = rating;
+        this.averagePrice = averagePrice;
+        this.info = info;
+        email = "";
     }
 
     public Restaurant() {
+        name = "";
+        this.address = "";
+        this.phone = "";
+        this.email = "";
+        this.websiteURL = "";
+        this.info = "";
+        this.imageURL = "";
+        rating = "";
+        googleMapsURL = "";
+        averagePrice = "";
+        menuURL = "";
     }
 
     @Override
     public String toString() {
-        return "RestaurantEntity{" +
+        return "Restaurant{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", url='" + url + '\'' +
-                ", info='" + info + '\'' +
+                ", websiteURL='" + websiteURL + '\'' +
                 ", imageURL='" + imageURL + '\'' +
+                ", googleMapsURL='" + googleMapsURL + '\'' +
+                ", menuURL='" + menuURL + '\'' +
+                ", rating='" + rating + '\'' +
+                ", averagePrice='" + averagePrice + '\'' +
+                ", info='" + info + '\'' +
                 '}';
     }
 
@@ -96,12 +137,12 @@ public class Restaurant {
         this.email = email;
     }
 
-    public String getUrl() {
-        return url;
+    public String getWebsiteURL() {
+        return websiteURL;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setWebsiteURL(String websiteURL) {
+        this.websiteURL = websiteURL;
     }
 
     public String getInfo() {
@@ -118,5 +159,37 @@ public class Restaurant {
 
     public void setImageURL(String imageURL){
         this.imageURL = imageURL;
+    }
+
+    public String getGoogleMapsURL() {
+        return googleMapsURL;
+    }
+
+    public void setGoogleMapsURL(String googleMapsURL) {
+        this.googleMapsURL = googleMapsURL;
+    }
+
+    public String getMenuURL() {
+        return menuURL;
+    }
+
+    public void setMenuURL(String menuURL) {
+        this.menuURL = menuURL;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getAveragePrice() {
+        return averagePrice;
+    }
+
+    public void setAveragePrice(String averagePrice) {
+        this.averagePrice = averagePrice;
     }
 }
