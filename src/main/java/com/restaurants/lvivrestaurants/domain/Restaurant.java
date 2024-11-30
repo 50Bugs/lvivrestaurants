@@ -18,15 +18,33 @@ public class Restaurant {
     private String rating;
     private String averagePrice;
     private String websiteURL;
-    @Column(length = 500)
+    @Column(length = 600)
     private String imageURL;
     @Column(length = 800)
     private String googleMapsURL;
     //@Column(length = 500)
     private String menuURL;
-    @Column(length = 500)
+    @Column(length = 8000)
     private String info;
-    //private Set <Restaurant> restaurants;
+
+    private String cuisine;
+    private String schedule;
+
+    public Restaurant() {
+        name = "";
+        address = "";
+        phone = "";
+        email = "";
+        websiteURL = "";
+        info = "";
+        imageURL = "";
+        rating = "";
+        googleMapsURL = "";
+        averagePrice = "";
+        menuURL = "";
+        cuisine = "";
+        schedule = "";
+    }
 
     public Restaurant(String name, String address, String phone, String email,
                       String websiteURL, String info, String imageURL) {
@@ -41,6 +59,8 @@ public class Restaurant {
         googleMapsURL = "";
         averagePrice = "";
         menuURL = "";
+        cuisine = "";
+        schedule = "";
     }
 
     public Restaurant(String name, String address, String phone, String websiteURL, String imageURL,
@@ -56,19 +76,24 @@ public class Restaurant {
         this.averagePrice = averagePrice;
         this.info = info;
         email = "";
+        cuisine = "";
+        schedule = "";
     }
 
-    public Restaurant() {
-        name = "";
-        this.address = "";
-        this.phone = "";
-        this.email = "";
-        this.websiteURL = "";
-        this.info = "";
-        this.imageURL = "";
-        rating = "";
+    public Restaurant(String name, String address, String phone, String info,
+                      String imageURL, String rating, String averagePrice, String cuisine, String schedule) {
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.info = info;
+        this.imageURL = imageURL;
+        this.rating = rating;
+        this.averagePrice = averagePrice;
+        this.cuisine = cuisine;
+        this.schedule = schedule;
         googleMapsURL = "";
-        averagePrice = "";
+        email = "";
+        websiteURL = "";
         menuURL = "";
     }
 
@@ -80,13 +105,15 @@ public class Restaurant {
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", rating='" + rating + '\'' +
+                ", averagePrice='" + averagePrice + '\'' +
                 ", websiteURL='" + websiteURL + '\'' +
                 ", imageURL='" + imageURL + '\'' +
                 ", googleMapsURL='" + googleMapsURL + '\'' +
                 ", menuURL='" + menuURL + '\'' +
-                ", rating='" + rating + '\'' +
-                ", averagePrice='" + averagePrice + '\'' +
                 ", info='" + info + '\'' +
+                ", cuisine='" + cuisine + '\'' +
+                ", schedule='" + schedule + '\'' +
                 '}';
     }
 
@@ -191,5 +218,21 @@ public class Restaurant {
 
     public void setAveragePrice(String averagePrice) {
         this.averagePrice = averagePrice;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 }

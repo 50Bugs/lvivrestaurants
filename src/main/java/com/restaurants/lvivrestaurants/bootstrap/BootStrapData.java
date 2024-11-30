@@ -20,10 +20,14 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //ArrayList<Restaurant> restaurants = ParsingData.parseFromDlabComUA();
         ArrayList<Restaurant> restaurants = FormatingData.mergeRestaurantLists(
                 ParsingData.parseFromDlabComUA(), ParsingData.parseFromGoogleMaps());
 
+        restaurants = FormatingData.mergeRestaurantLists(restaurants, ParsingData.parseFromTomatoUA());
+        for(Restaurant r: restaurants){
+            System.out.println(r);
+        }
+        System.out.println(restaurants.size());
         for (Restaurant r : restaurants){
             restaurantRepository.save(r);
         }

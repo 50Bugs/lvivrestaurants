@@ -15,7 +15,6 @@ public class FormatingData {
                 if (normalizeAddress(r1.getAddress()).equals(normalizeAddress(r2.getAddress()))) {
                     foundDuplicate = true;
 
-                    // Оновлюємо порожні поля у r1 даними з r2
                     if (r1.getPhone() == null || r1.getPhone().isEmpty()) {
                         r1.setPhone(r2.getPhone());
                     }
@@ -43,11 +42,16 @@ public class FormatingData {
                     if (r1.getAveragePrice() == null || r1.getAveragePrice().isEmpty()) {
                         r1.setAveragePrice(r2.getAveragePrice());
                     }
+                    if (r1.getCuisine() == null || r1.getCuisine().isEmpty()) {
+                        r1.setCuisine(r2.getCuisine());
+                    }
+                    if (r1.getSchedule() == null || r1.getSchedule().isEmpty()) {
+                        r1.setSchedule(r2.getSchedule());
+                    }
                     break;
                 }
             }
 
-            // Додаємо новий ресторан, якщо дубліката не знайдено
             if (!foundDuplicate) {
                 list1.add(r2);
             }
@@ -58,29 +62,33 @@ public class FormatingData {
     public static String normalizeAddress(String address){
         String normalized = address.toLowerCase();
 
-        // Видаляємо поштовий індекс, якщо він є
+        // видалення поштового індексу, якщо він є
         normalized = normalized.replaceAll(",?\\s*\\d{5}", "");
 
-        // Видаляємо "Львівська область" або інші зайві частини
+        // видалення "Львівська область" або інші зайві частини
         normalized = normalized.replaceAll(",?\\s*львівська область", "");
 
-        // Видаляємо "м. Львів" або "Львів", якщо вони є на початку чи в кінці
+        // видалення "м. Львів" або "Львів", якщо вони є на початку чи в кінці
         normalized = normalized.replaceAll("^м\\.\\s*львів,?\\s*", "");
         normalized = normalized.replaceAll("^львів,?\\s*", "");
         normalized = normalized.replaceAll(",?\\s*львів$", "");
 
-        // Змінюємо префікси "вулиця", "вул.", "площа", "пл.", "просп." на єдиний формат
+        // зміна префіксів "вулиця", "вул.", "площа", "пл.", "просп." на єдиний формат
         normalized = normalized.replaceAll("\\bвул\\.|вулиця\\b", "вул.");
         normalized = normalized.replaceAll("\\bпл\\.|площа\\b", "пл.");
         normalized = normalized.replaceAll("\\bпросп\\.|проспект\\b", "просп.");
 
-        // Прибираємо зайві частини після "вул.", "пл." чи "просп.", якщо є більше одного пробілу до коми
+        // видалення зайвих частин після "вул.", "пл." чи "просп.", якщо є більше одного пробілу до коми
         normalized = normalizeStreetName(normalized);
 
-        // Видаляємо зайві уточнення в дужках, наприклад, "(підвал)"
+        // видалення уточнень про поверхи, квартири
+        normalized = normalized.replaceAll("\\s*,?\\s*пов\\.?\\s*\\d+", ""); // "пов. 2" -> ""
+        normalized = normalized.replaceAll("\\s*,?\\s*к\\.\\s*\\d+", "");   // "к. 8" -> ""
+
+        // видалення зайвих уточнень в дужках, наприклад, "(підвал)"
         normalized = normalized.replaceAll("\\s*\\(.*?\\)", "");
 
-        // Якщо адреса починається з номера, переносимо його в кінець
+        // якщо адреса починається з номера, переносить його в кінець
         if (normalized.matches("^\\d+,?\\s+.*")) {
             int firstCommaIndex = normalized.indexOf(",");
             if (firstCommaIndex != -1) {
@@ -89,8 +97,7 @@ public class FormatingData {
             }
         }
 
-
-        // Очищаємо зайві пробіли та коми
+        // зайві пробіли та коми
         normalized = normalized.replaceAll(",\\s*,", ",").replaceAll("\\s+", " ");
         normalized = normalized.replaceAll(",\\s*$", "").trim();
         return normalized;
