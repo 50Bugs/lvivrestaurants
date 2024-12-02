@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -27,7 +28,11 @@ public class BootStrapData implements CommandLineRunner {
         for(Restaurant r: restaurants){
             System.out.println(r);
         }
+
+        //ArrayList<Restaurant> restaurants = ParsingData.parseFromDlabComUA();
         System.out.println(restaurants.size());
+
+        restaurants.sort(Comparator.comparing(Restaurant::getName));
         for (Restaurant r : restaurants){
             restaurantRepository.save(r);
         }

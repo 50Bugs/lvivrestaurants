@@ -109,7 +109,7 @@ public class ParsingData {
         driver.get("https://www.google.com.ua/maps/search/ресторан+львів/@49.8318065,24.0162601,12.5z?hl=uk&entry=ttu");
 
         try {
-            Thread.sleep(40000);
+            Thread.sleep(35000);
         } catch (InterruptedException e){
             e.printStackTrace();
         }

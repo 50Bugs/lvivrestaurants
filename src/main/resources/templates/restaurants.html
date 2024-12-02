@@ -43,7 +43,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ресторани Львова</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="css/index.css">-->
+    <style>
+    .card {
+        display: flex; /* Робить елементи в картці горизонтально орієнтованими */
+        align-items: center; /* Центрує вертикально (за потреби) */
+    }
+    .card-img-left {
+        max-width: 150px; /* Обмежує ширину зображення */
+        max-height: 150px; /* Обмежує висоту зображення */
+        margin-right: 15px; /* Відступ між зображенням і текстом */
+        object-fit: cover; /* Забезпечує збереження пропорцій */
+    }
+    .text-right {
+    text-align: right;
+    }
+
+
+</style>
 </head>
 <body>
 
@@ -55,11 +73,17 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="#home">Головна</a>
-            </li>
+            </li>-->
             <li class="nav-item">
                 <a class="nav-link" href="#restaurants">Ресторани</a>
+            </li>
+            <li class="nav-item">
+                <!--<div class="text-center">
+                    <a href="/search" class="btn btn-secondary">Пошук</a>
+                </div>-->
+                <a class="nav-link" href="/search">Пошук</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#contact">Контакти</a>
@@ -85,14 +109,46 @@
             <p>Ознайомтеся з найкращими закладами міста</p>
         </div>
         <div class="row">
-            <div th:each="restaurant : ${restaurants}" class="col-md-4 mb-4">
-                <div class="card">
-                    <img th:src="@{${restaurant.imageURL}}" class="card-img-top" alt="Фото ресторану">
+            <div th:each="restaurant : ${restaurants}" class="col-12 mb-4">
+                <div class="card d-flex flex-row">
+                    <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="">
                     <div class="card-body">
                         <h5 th:text="${restaurant.name}" class="card-title">Назва Ресторану</h5>
+                        <p class="card-text" th:if="${restaurant.address != null and !#strings.isEmpty(restaurant.address)}">
+                            <i class="fas fa-map-marker-alt" title="Адреса"></i> <strong th:text="${restaurant.address}"></strong>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.googleMapsURL != null and !#strings.isEmpty(restaurant.googleMapsURL)}">
+                            <!--<i class="fas fa-search-location"></i>-->
+                            <i class="fas fa-map-marked-alt" title="Показати на карті"></i> <a th:href="${restaurant.googleMapsURL}" th:text="'Показати на карті'" title="Перейти" target="_blank"></a>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.phone != null and !#strings.isEmpty(restaurant.phone)}">
+                            <i class="fas fa-phone-alt" title="Телефон"></i> <a th:href="'tel:' + ${restaurant.phone}" th:text="${restaurant.phone}"></a>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.email != null and !#strings.isEmpty(restaurant.email)}">
+                            <i class="fas fa-envelope" title="Пошта"></i> <a th:href="'mailto:' + ${restaurant.email}" th:text="${restaurant.email}"></a>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.websiteURL != null and !#strings.isEmpty(restaurant.websiteURL)}">
+                            <!--<i class="fas fa-link"></i>-->
+                            <!--<i class="fas fa-address-book"></i>-->
+                            <i class="fab fa-facebook" title="Вебсайт"></i> <a th:href="${restaurant.websiteURL}" th:text="${restaurant.websiteURL}" target="_blank"></a>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.menuURL != null and !#strings.isEmpty(restaurant.menuURL)}">
+                            <i class="fas fa-scroll" title="Меню"></i> <a th:href="${restaurant.menuURL}" th:text="'Меню'" title="Перейти" target="_blank"></a>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.schedule != null and !#strings.isEmpty(restaurant.schedule)}">
+                            <i class="fas fa-business-time" title="Графік"></i> <span th:text="${restaurant.schedule}"></span>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.rating != null and !#strings.isEmpty(restaurant.rating)}">
+                            <i class="fas fa-star-half-alt" title="Рейтинг"></i> <span th:text="${restaurant.rating}"></span>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.averagePrice != null and !#strings.isEmpty(restaurant.averagePrice)}">
+                            <i class="fas fa-money-check-alt" title="Середня вартість чеку"></i> <span th:text="${restaurant.averagePrice}"></span>
+                        </p>
+                        <p class="card-text" th:if="${restaurant.cuisine != null and !#strings.isEmpty(restaurant.cuisine)}">
+                            <i class="fas fa-pizza-slice" title="Кухня"></i> <span th:text="${restaurant.cuisine}"></span>
+                        </p>
                         <p th:text="${restaurant.info}" class="card-text">Опис ресторану</p>
-                        <p class="card-text"><strong th:text="${restaurant.address}">Адреса</strong></p>
-                        <p class="card-text"><strong>Рейтинг: <!--<span th:text="${restaurant.rating}">5.0</span>--></strong></p>
+
                     </div>
                 </div>
             </div>
