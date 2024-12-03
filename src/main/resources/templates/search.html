@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пошук Ресторанів</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    .card {
+        display: flex; /* Робить елементи в картці горизонтально орієнтованими */
+        align-items: center; /* Центрує вертикально (за потреби) */
+    }
+    .card-img-left {
+        max-width: 150px; /* Обмежує ширину зображення */
+        max-height: 150px; /* Обмежує висоту зображення */
+        margin-right: 15px; /* Відступ між зображенням і текстом */
+        object-fit: cover; /* Забезпечує збереження пропорцій */
+    }
+    .text-right {
+    text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Ресторани Львова</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/restaurants">Головна</a>
+      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" href="/restaurants">Ресторани</a>
+      </li>-->
+      <li class="nav-item active">
+        <a class="nav-link" href="/search">Пошук</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#contact">Контакти</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Search Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2>Пошук Ресторанів</h2>
+      <p>Знайдіть ресторан за назвою, адресою, кухнею тощо.</p>
+    </div>
+    <form action="/search/results" method="GET" class="mb-5">
+      <div class="form-group">
+        <input type="text" name="query" class="form-control" placeholder="Введіть критерій пошуку...">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Знайти</button>
+      </div>
+    </form>
+    <div th:if="${searchResults != null}">
+      <h3 th:if="${searchResults.size() > 0}" class="mb-4">Результати пошуку</h3>
+      <h3 th:if="${searchResults.size() == 0}" class="mb-4">Нічого не знайдено</h3>
+      <div class="row">
+        <div th:each="restaurant : ${searchResults}" class="col-12 mb-4">
+          <div class="card d-flex flex-row">
+            <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="">
+            <div class="card-body">
+              <h5 th:text="${restaurant.name}" class="card-title">Назва Ресторану</h5>
+              <p class="card-text" th:if="${restaurant.address != null and !#strings.isEmpty(restaurant.address)}">
+                <i class="fas fa-map-marker-alt" title="Адреса"></i> <strong th:text="${restaurant.address}"></strong>
+              </p>
+              <p class="card-text" th:if="${restaurant.googleMapsURL != null and !#strings.isEmpty(restaurant.googleMapsURL)}">
+                <!--<i class="fas fa-search-location"></i>-->
+                <i class="fas fa-map-marked-alt" title="Показати на карті"></i> <a th:href="${restaurant.googleMapsURL}" th:text="'Показати на карті'" title="Перейти" target="_blank"></a>
+              </p>
+              <p class="card-text" th:if="${restaurant.phone != null and !#strings.isEmpty(restaurant.phone)}">
+                <i class="fas fa-phone-alt" title="Телефон"></i> <a th:href="'tel:' + ${restaurant.phone}" th:text="${restaurant.phone}"></a>
+              </p>
+              <p class="card-text" th:if="${restaurant.email != null and !#strings.isEmpty(restaurant.email)}">
+                <i class="fas fa-envelope" title="Пошта"></i> <a th:href="'mailto:' + ${restaurant.email}" th:text="${restaurant.email}"></a>
+              </p>
+              <p class="card-text" th:if="${restaurant.websiteURL != null and !#strings.isEmpty(restaurant.websiteURL)}">
+                <!--<i class="fas fa-link"></i>-->
+                <!--<i class="fas fa-address-book"></i>-->
+                <i class="fab fa-facebook" title="Вебсайт"></i> <a th:href="${restaurant.websiteURL}" th:text="${restaurant.websiteURL}" target="_blank"></a>
+              </p>
+              <p class="card-text" th:if="${restaurant.menuURL != null and !#strings.isEmpty(restaurant.menuURL)}">
+                <i class="fas fa-scroll" title="Меню"></i> <a th:href="${restaurant.menuURL}" th:text="'Меню'" title="Перейти" target="_blank"></a>
+              </p>
+              <p class="card-text" th:if="${restaurant.schedule != null and !#strings.isEmpty(restaurant.schedule)}">
+                <i class="fas fa-business-time" title="Графік"></i> <span th:text="${restaurant.schedule}"></span>
+              </p>
+              <p class="card-text" th:if="${restaurant.rating != null and !#strings.isEmpty(restaurant.rating)}">
+                <i class="fas fa-star-half-alt" title="Рейтинг"></i> <span th:text="${restaurant.rating}"></span>
+              </p>
+              <p class="card-text" th:if="${restaurant.averagePrice != null and !#strings.isEmpty(restaurant.averagePrice)}">
+                <i class="fas fa-money-check-alt" title="Середня вартість чеку"></i> <span th:text="${restaurant.averagePrice}"></span>
+              </p>
+              <p class="card-text" th:if="${restaurant.cuisine != null and !#strings.isEmpty(restaurant.cuisine)}">
+                <i class="fas fa-pizza-slice" title="Кухня"></i> <span th:text="${restaurant.cuisine}"></span>
+              </p>
+              <p th:text="${restaurant.info}" class="card-text">Опис ресторану</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2>Контакти</h2>
+      <p>Зв'яжіться з нами для будь-яких запитань</p>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <h5>Адреса</h5>
+        <p>Вулиця Прикладна, 123<br>Львів, Україна</p>
+      </div>
+      <div class="col-md-6 mb-4">
+        <h5>Контактна інформація</h5>
+        <p>Email: info@lvivrestaurants.com<br>Телефон: (032) 123-4567</p>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="mailto:info@lvivrestaurants.com" class="btn btn-primary">Напишіть нам</a>
+    </div>
+  </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

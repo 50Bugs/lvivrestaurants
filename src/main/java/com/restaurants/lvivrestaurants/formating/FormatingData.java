@@ -76,7 +76,7 @@ public class FormatingData {
         // зміна префіксів "вулиця", "вул.", "площа", "пл.", "просп." на єдиний формат
         normalized = normalized.replaceAll("\\bвул\\.|вулиця\\b", "вул.");
         normalized = normalized.replaceAll("\\bпл\\.|площа\\b", "пл.");
-        normalized = normalized.replaceAll("\\bпросп\\.|проспект\\b", "просп.");
+        normalized = normalized.replaceAll("\\b(просп\\.|проспект|пр\\.)\\b", "просп.");
 
         // видалення зайвих частин після "вул.", "пл." чи "просп.", якщо є більше одного пробілу до коми
         normalized = normalizeStreetName(normalized);
@@ -100,10 +100,12 @@ public class FormatingData {
         // зайві пробіли та коми
         normalized = normalized.replaceAll(",\\s*,", ",").replaceAll("\\s+", " ");
         normalized = normalized.replaceAll(",\\s*$", "").trim();
+
+        normalized = removeLettersFromHouseNumber(normalized);
         return normalized;
     }
 
-    public static String normalizeStreetName(String address) {
+    private static String normalizeStreetName(String address) {
 
         if (address == null || address.isEmpty())
             return address;
@@ -121,6 +123,33 @@ public class FormatingData {
             return address2 + address1;
         }
 
+    }
+
+    private static String removeLettersFromHouseNumber(String address) {
+        if (address == null || address.isEmpty()) {
+            return address; // Повернути оригінальний адрес, якщо він null або порожній
+        }
+
+        // Перевірка на наявність коми
+        if (!address.contains(",")) {
+            return address; // Якщо коми немає, повернути оригінальний адрес
+        }
+
+        // Розбити адресу на частини
+        String[] parts = address.split(",");
+
+        // Перевірка на наявність хоча б двох частин (вулиця і номер будинку)
+        if (parts.length < 2) {
+            return address; // Повернути оригінальний адрес, якщо формат неправильний
+        }
+
+        String street = parts[0].trim(); // Вулиця
+        String houseNumber = parts[1].trim(); // Номер будинку
+
+        // Видалити літери з номера будинку
+        houseNumber = houseNumber.replaceAll("[^\\d]", ""); // Залишити лише цифри
+
+        return street + ", " + houseNumber;
     }
 
 }

@@ -1,41 +1,3 @@
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="author" content="Serhii Kit">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
-    <title>Ресторани Львова</title>
-    <style>
-    </style>
-</head>
-<body>
-    <header class = header_section>
-        <div class="header_top">
-            <div class="container-fluid">
-                <div class="contact_link-container">
-                    <a>Ресторани Львова</a>
-                    <a class="phone" href="#" class="contact_link2">
-                        <span>+8800-55-53-535</span>
-                    </a>
-                    <a class="a_email" href="mailto:lviv.restaurants@gmail.com">lviv.restaurants@gmail.com</a>
-                </div>
-            </div>
-        </div>
-        <div class="image-container">
-            <img src="" alt="Background image">
-            <div class="text-overlay">Ласкаво просимо до Львова!</div>
-            <div class="text-overlay1">Відкрийте для себе найкращі ресторани міста Лева.</div>
-        </div>
-    </header>
-
-
-
-
-</body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="uk" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -51,10 +13,11 @@
         align-items: center; /* Центрує вертикально (за потреби) */
     }
     .card-img-left {
-        max-width: 150px; /* Обмежує ширину зображення */
-        max-height: 150px; /* Обмежує висоту зображення */
+        width: 350px; /* Задаємо ширину зображення */
+        height: 350px; /* Задаємо висоту зображення */
         margin-right: 15px; /* Відступ між зображенням і текстом */
         object-fit: cover; /* Забезпечує збереження пропорцій */
+        border-radius: 8px; /* Опціонально: додає закруглені краї */
     }
     .text-right {
     text-align: right;
@@ -111,7 +74,7 @@
         <div class="row">
             <div th:each="restaurant : ${restaurants}" class="col-12 mb-4">
                 <div class="card d-flex flex-row">
-                    <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="">
+                    <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="" th:if="${restaurant.imageURL != null and !#strings.isEmpty(restaurant.imageURL)}">
                     <div class="card-body">
                         <h5 th:text="${restaurant.name}" class="card-title">Назва Ресторану</h5>
                         <p class="card-text" th:if="${restaurant.address != null and !#strings.isEmpty(restaurant.address)}">

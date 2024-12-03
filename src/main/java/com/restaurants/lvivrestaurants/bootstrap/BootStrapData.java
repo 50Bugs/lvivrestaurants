@@ -32,7 +32,7 @@ public class BootStrapData implements CommandLineRunner {
         //ArrayList<Restaurant> restaurants = ParsingData.parseFromDlabComUA();
         System.out.println(restaurants.size());
 
-        restaurants.sort(Comparator.comparing(Restaurant::getName));
+        //restaurants.sort(Comparator.comparing(Restaurant::getName));
         for (Restaurant r : restaurants){
             restaurantRepository.save(r);
         }
