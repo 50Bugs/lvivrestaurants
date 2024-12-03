@@ -76,7 +76,10 @@ public class FormatingData {
         // зміна префіксів "вулиця", "вул.", "площа", "пл.", "просп." на єдиний формат
         normalized = normalized.replaceAll("\\bвул\\.|вулиця\\b", "вул.");
         normalized = normalized.replaceAll("\\bпл\\.|площа\\b", "пл.");
-        normalized = normalized.replaceAll("\\b(просп\\.|проспект|пр\\.)\\b", "просп.");
+        normalized = normalized.replaceAll("\\bпросп\\.|проспект\\b", "просп.");
+        if(normalized.indexOf("пр.") == 0) {
+            normalized = normalized.replaceAll("пр", "просп");
+        }
 
         // видалення зайвих частин після "вул.", "пл." чи "просп.", якщо є більше одного пробілу до коми
         normalized = normalizeStreetName(normalized);

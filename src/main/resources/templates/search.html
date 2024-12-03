@@ -12,10 +12,11 @@
         align-items: center; /* Центрує вертикально (за потреби) */
     }
     .card-img-left {
-        max-width: 150px; /* Обмежує ширину зображення */
-        max-height: 150px; /* Обмежує висоту зображення */
+        width: 350px; /* Задаємо ширину зображення */
+        height: 350px; /* Задаємо висоту зображення */
         margin-right: 15px; /* Відступ між зображенням і текстом */
         object-fit: cover; /* Забезпечує збереження пропорцій */
+        border-radius: 8px; /* Опціонально: додає закруглені краї */
     }
     .text-right {
     text-align: right;
@@ -69,7 +70,7 @@
       <div class="row">
         <div th:each="restaurant : ${searchResults}" class="col-12 mb-4">
           <div class="card d-flex flex-row">
-            <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="">
+            <img th:src="${restaurant.imageURL}" class="card-img-left img-fluid" alt="" th:if="${restaurant.imageURL != null and !#strings.isEmpty(restaurant.imageURL)}">
             <div class="card-body">
               <h5 th:text="${restaurant.name}" class="card-title">Назва Ресторану</h5>
               <p class="card-text" th:if="${restaurant.address != null and !#strings.isEmpty(restaurant.address)}">
